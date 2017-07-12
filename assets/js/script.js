@@ -3,22 +3,26 @@
 var test = {
 	score: 0,
 	time: 0,
-	categories: [],
+	categories: ['math', 'science', 'sports', 'computers'],
 	startGame: function () {
-		window.onload = function() {
 
-			$('.trivia-body').html('<h3>Please select a category</h3><button class="math category">Math</button><button class="science category">Science</button><button class="sports category">sports</button><button class="computer category">Computer Programming</button>');
+		$('.trivia-body').html('<div class="trivia-wrap"><h3>Please select a category</h3><button class="math category">Math</button><button class="science category">Science</button><button class="sports category">sports</button><button class="computer category">Computer Programming</button></div>');
 
-		}
 	},
-	catClick: function () {
+	catClick: function (categories) {
 
-		$('.triva-body').html('');
+		$('.trivia-wrap').empty();
 
 	},
 	question: function () {},
 	reset: function () {}
 };
 
-test.startGame();
-$('.category').click(catClick);
+window.onload = function () {
+
+	test.startGame();
+	$('button.category').on('click',function(){
+		test.catClick();
+	});
+
+}
