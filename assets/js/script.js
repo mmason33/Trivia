@@ -1,5 +1,8 @@
 var pickedCat;
 var questionCounter = 0;
+var correctAnswers = 0;
+var incorrectAnswers = 0;
+var unansweredQuestions = 0;
 
 var test = {
 	score: 0,
@@ -269,7 +272,7 @@ var test = {
 	],
 	startGame: function () {
 
-		$('.trivia-body').html('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
+		$('.trivia-body').append('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
 
 	},
 	categoryClick: function (event) {
@@ -296,10 +299,12 @@ var test = {
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
 				$('.trivia-wrap').append(
-					'<h5>' + 'A. ' + this.categories[cat].questions[questionCounter].choices[0] + '</h5>',
-					'<h5>' + 'B. ' + this.categories[cat].questions[questionCounter].choices[1] + '</h5>',
-					'<h5>' + 'C. ' + this.categories[cat].questions[questionCounter].choices[2] + '</h5>',
-					'<h5>' + 'D. ' + this.categories[cat].questions[questionCounter].choices[3] + '</h5>'
+					'<div class="row justify-content-center"><div class="col-5 text-center">' +
+					'<h5 class="choice">' + 'A. ' + this.categories[cat].questions[questionCounter].choices[0] + '</h5>' +
+					'<h5 class="choice">' + 'B. ' + this.categories[cat].questions[questionCounter].choices[1] + '</h5>' +
+					'<h5 class="choice">' + 'C. ' + this.categories[cat].questions[questionCounter].choices[2] + '</h5>' +
+					'<h5 class="choice">' + 'D. ' + this.categories[cat].questions[questionCounter].choices[3] + '</h5>' +
+					'</div></div>'
 					);
 			}	
 		}

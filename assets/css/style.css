@@ -12,7 +12,7 @@ body {
 
 
 .container {
-	padding-top: 8em;
+	padding-top: 1em;
 }
 
 .timer {
@@ -36,4 +36,11 @@ h1, h2, h3, h4, h5 {
 
 .show {
 	display: block;
+}
+
+.choice {
+	background-image: linear-gradient(to bottom, #002042, #2777b1);
+	border: 1px solid #2777b1;
+	padding: .5em;
+	margin-top: 1em;
 }
