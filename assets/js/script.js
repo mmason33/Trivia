@@ -344,7 +344,7 @@ var test = {
 	answerClick: function () {
 		selectedChoice = $(this).attr('id');
 		clearInterval(timer);
-		if (questionCounter <= 9) {
+		if (questionCounter < 9) {
 			questionCounter++;
 			test.evalAnswer();
 		 	test.question();
@@ -356,6 +356,7 @@ var test = {
 			console.log(numberOfAnswers);
 			test.evalScore();
 		}
+		console.log(selectedChoice);
 	},
 
 	evalAnswer: function () {
@@ -375,10 +376,11 @@ var test = {
 	evalScore: function () {
 		if (correctAnswers === 10) {
 			console.log('million');
-		} else if (correctAnswers === 7) {
-			console.log('700k');
+		} else if (correctAnswers >= 7 & correctAnswers < 10) {
+			console.log(correctAnswers + '00k');
 		} else {
 		 	console.log ('no dice');
+		 	console.log(correctAnswers + '00k');
 		 }	
 	},
 
