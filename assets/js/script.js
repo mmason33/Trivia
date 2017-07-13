@@ -325,6 +325,7 @@ var test = {
 			if (currentTime === 0) {
 				questionCounter++;
 				console.log(questionCounter, 'ran out of time');
+				test.evalAnswer();
 				test.question();
 			}
 
@@ -334,10 +335,12 @@ var test = {
 
 	answerClick: function () {
 		selectedChoice = $(this).attr('id');
-		questionCounter++;
 		clearInterval(timer);
-		test.evalAnswer();
-		test.question();
+		if (questionCounter < 9) {
+			questionCounter++;
+			test.evalAnswer();
+		 	test.question();
+		}
 	},
 
 	evalAnswer: function () {
@@ -345,7 +348,7 @@ var test = {
 			if (pickedCat === test.categories[cat].name) {
 				if (parseInt(selectedChoice) === this.categories[cat].questions[questionCounter].answer) {
 					correctAnswers++;
-				} else if (parseInt(selectedChoice) !== this.categories[cat].questions[questionCounter].answer) {
+				} else if (parseInt(selectedChoice)) {
 					incorrectAnswers++;
 				} else {
 					unansweredQuestions++;
