@@ -5,10 +5,11 @@ var incorrectAnswers = 0;
 var unansweredQuestions = 0;
 var timer;
 var selectedChoice;
+var numberOfAnswers = 0;
 
 var test = {
 	score: 0,
-	time: 3,
+	time: 60,
 	categories: [
 		{
 			name: 'Math',
@@ -283,7 +284,6 @@ var test = {
 			if ($(event.target).attr('id') === test.categories[cat].name) {
 				$('.header').append('<h1 class="cat-title animated fadeIn">' + test.categories[cat].name + '</h1>');
 				pickedCat = $(event.target).attr('id');
-				console.log(pickedCat);
 			}
 		}
 		this.question();
@@ -294,7 +294,6 @@ var test = {
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
 				$('.trivia-wrap').append('<h3 class="animated fadeIn">'+ questionNumber + '. ' + this.categories[cat].questions[questionCounter].theQuestion + '</h3>')
-				console.log(questionCounter);
 			}
 		}
 		this.avalChoices();
@@ -322,9 +321,8 @@ var test = {
 			currentTime--;
 			$('.timer').text('Timer: ' + currentTime + ' seconds');
 
-			if (currentTime === 0) {
+			if (currentTime === 0 && questionCounter !== 9) {
 				questionCounter++;
-				console.log(questionCounter, 'ran out of time');
 				test.evalAnswer();
 				test.question();
 			}
@@ -336,10 +334,17 @@ var test = {
 	answerClick: function () {
 		selectedChoice = $(this).attr('id');
 		clearInterval(timer);
-		if (questionCounter < 9) {
+		if (questionCounter <= 9) {
 			questionCounter++;
 			test.evalAnswer();
 		 	test.question();
+		 	numberOfAnswers++;
+			console.log(numberOfAnswers);
+		} else if (questionCounter === 9) {
+			test.evalAnswer();
+		 	numberOfAnswers++;
+			console.log(numberOfAnswers);
+			test.evalScore();
 		}
 	},
 
@@ -355,14 +360,22 @@ var test = {
 				}
 			}
 		}
-		console.log(correctAnswers,'correct',incorrectAnswers,'incorrect',unansweredQuestions,'unanswered');
 	},
 
-	reset: function () {}
+	evalScore: function () {
+		if (correctAnswers === 10) {
+			console.log('million');
+		} else if (correctAnswers === 7) {
+			console.log('700k');
+		} else {
+		 	console.log ('no dice');
+		 }	
+	},
+
+	reset: function () {
+		location.reload();
+	}
 };
-
-
-
 
 
 window.onload = function () {
