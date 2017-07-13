@@ -376,12 +376,11 @@ var test = {
 	evalScore: function () {
 		if (correctAnswers === 10) {
 			console.log('million');
-		} else if (correctAnswers >= 7 & correctAnswers < 10) {
+		} else if (correctAnswers > 10 && correctAnswers !== 0) {
 			console.log(correctAnswers + '00k');
 		} else {
 		 	console.log ('no dice');
-		 	console.log(correctAnswers + '00k');
-		 }	
+		}	
 	},
 
 	reset: function () {
