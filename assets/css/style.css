@@ -1,4 +1,39 @@
-/*.trivia-container {
-	background: #e6e6e6;
-	height: 300px;
-}*/
+body {
+	background: url('../images/background2.png') no-repeat center center;
+	background-size: cover;
+	position: relative;
+	height: 100vh;
+}
+
+.trivia-container {
+	background: rgba(0,0,0,.75);
+	padding: 2em 0;
+}
+
+
+.container {
+	padding-top: 8em;
+}
+
+.timer {
+	background: #e3e3e3;
+	color: #666;
+	padding:1em;
+	position: absolute;
+    left: 83.75%;
+    width: 170px;
+    top: -10%;
+}
+
+h1, h2, h3, h4, h5 {
+	color: #fff;
+}
+
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
