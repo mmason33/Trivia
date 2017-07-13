@@ -1,5 +1,5 @@
 body {
-	background: url('../images/background2.png') no-repeat center center;
+	/*background: url('../images/background2.png') no-repeat center center;*/
 	background-size: cover;
 	position: relative;
 	height: 100vh;
@@ -26,7 +26,8 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-	color: #fff;
+	/*color: #fff;*/
+	color: #666;
 }
 
 
@@ -41,6 +42,10 @@ h1, h2, h3, h4, h5 {
 .choice {
 	background-image: linear-gradient(to bottom, #002042, #2777b1);
 	border: 1px solid #2777b1;
-	padding: .5em;
+	color: #fff;
+	display: block;
 	margin-top: 1em;
+	padding: .5em;
+	position: relative;
+	width: 100%;
 }

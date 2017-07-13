@@ -3,10 +3,12 @@ var questionCounter = 0;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 var unansweredQuestions = 0;
+var timer;
+var selectedChoice;
 
 var test = {
 	score: 0,
-	time: 60,
+	time: 3,
 	categories: [
 		{
 			name: 'Math',
@@ -25,51 +27,51 @@ var test = {
 				},
 				{
 					amount: '300,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is 20 x 7?',
+					choices: ['120', '100', '200', '140'],
+					answer: 3
 				},
 				{
 					amount: '400,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is the answer - (7 + 4 - 1) x 13?',
+					choices: ['144', '133', '130', '140'],
+					answer: 2
 				},
 				{
 					amount: '500,000',
-					theQuestion: '',
-					choices: [],
+					theQuestion: 'What is the square root of 144?',
+					choices: ['10', '12', '14', '24'],
 					answer: 1
 				},
 				{
 					amount: '600,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is the square root of (441) x 2?',
+					choices: ['21', '40', '20', '42'],
+					answer: 3
 				},
 				{
 					amount: '700,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is the answer - ((239 x 2) + 2) / 4?',
+					choices: ['120', '100', '400', '480'],
+					answer: 0
 				},
 				{
 					amount: '800,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'Select the prime number.',
+					choices: ['26', '32', '48', '2'],
+					answer: 3
 				},
 				{
 					amount: '900,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is the answer - ((-2 x -2) + -1) x -3',
+					choices: ['9', '-12', '-9', '12'],
+					answer: 2
 				},				
 				{
 					amount: '1,000,000',
-					theQuestion: '',
-					choices: [],
-					answer: 1
+					theQuestion: 'What is the cube root of 729?',
+					choices: ['9', '18', '6', '12'],
+					answer: 0
 				}								
 			]
 		},
@@ -276,20 +278,23 @@ var test = {
 
 	},
 	categoryClick: function (event) {
-		$('.trivia-wrap').empty();
+		// $('.trivia-wrap').empty();
 		for (let cat in this.categories) {
 			if ($(event.target).attr('id') === test.categories[cat].name) {
-				$('.cat-title').text(test.categories[cat].name);
-				pickedCat = test.categories[cat].name;
+				$('.header').append('<h1 class="cat-title animated fadeIn">' + test.categories[cat].name + '</h1>');
+				pickedCat = $(event.target).attr('id');
 				console.log(pickedCat);
 			}
 		}
+		this.question();
 	},
 	question: function () {
+		var questionNumber = questionCounter + 1;
+		$('.trivia-wrap').empty();
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
-				$('.trivia-wrap').append('<h3>'+ (questionCounter + 1) + '. ' + this.categories[cat].questions[questionCounter].theQuestion + '</h3>')
-				console.log('yes');
+				$('.trivia-wrap').append('<h3 class="animated fadeIn">'+ questionNumber + '. ' + this.categories[cat].questions[questionCounter].theQuestion + '</h3>')
+				console.log(questionCounter);
 			}
 		}
 		this.avalChoices();
@@ -299,34 +304,28 @@ var test = {
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
 				$('.trivia-wrap').append(
-					'<div class="row justify-content-center"><div class="col-5 text-center">' +
-					'<h5 class="choice">' + 'A. ' + this.categories[cat].questions[questionCounter].choices[0] + '</h5>' +
-					'<h5 class="choice">' + 'B. ' + this.categories[cat].questions[questionCounter].choices[1] + '</h5>' +
-					'<h5 class="choice">' + 'C. ' + this.categories[cat].questions[questionCounter].choices[2] + '</h5>' +
-					'<h5 class="choice">' + 'D. ' + this.categories[cat].questions[questionCounter].choices[3] + '</h5>' +
+					'<div class="row justify-content-center animated fadeIn"><div class="col-5 text-center">' +
+					'<button id="0"class="choice">' + 'A. ' + this.categories[cat].questions[questionCounter].choices[0] + '</button>' +
+					'<button id="1"class="choice">' + 'B. ' + this.categories[cat].questions[questionCounter].choices[1] + '</button>' +
+					'<button id="2"class="choice">' + 'C. ' + this.categories[cat].questions[questionCounter].choices[2] + '</button>' +
+					'<button id="3"class="choice">' + 'D. ' + this.categories[cat].questions[questionCounter].choices[3] + '</button>' +
 					'</div></div>'
 					);
 			}	
 		}
+		$('.choice').click(test.answerClick);
 	},
-
 	timer: function () {
 		$('.timer').text('Timer: ' + this.time + ' seconds').removeClass('hide');
 		var currentTime = this.time;
-		var timer =	setInterval(function () {
+		timer =	setInterval(function () {
 			currentTime--;
 			$('.timer').text('Timer: ' + currentTime + ' seconds');
 
-			if (currentTime !== 0) {
-				$('.trivia-wrap h5').click(function () {
-					questionCounter++;
-					$('.trivia-wrap').empty();
-					test.question();
-				});
-			} else {
+			if (currentTime === 0) {
 				questionCounter++;
-				$('.trivia-wrap').empty();
-				test.question();			
+				console.log(questionCounter, 'ran out of time');
+				test.question();
 			}
 
 		}, 1000);
@@ -334,11 +333,27 @@ var test = {
 	},
 
 	answerClick: function () {
-
+		selectedChoice = $(this).attr('id');
 		questionCounter++;
+		clearInterval(timer);
+		test.evalAnswer();
+		test.question();
 	},
 
-	evalAnswer: function () {},
+	evalAnswer: function () {
+		for (let cat in this.categories) {
+			if (pickedCat === test.categories[cat].name) {
+				if (parseInt(selectedChoice) === this.categories[cat].questions[questionCounter].answer) {
+					correctAnswers++;
+				} else if (parseInt(selectedChoice) !== this.categories[cat].questions[questionCounter].answer) {
+					incorrectAnswers++;
+				} else {
+					unansweredQuestions++;
+				}
+			}
+		}
+		console.log(correctAnswers,'correct',incorrectAnswers,'incorrect',unansweredQuestions,'unanswered');
+	},
 
 	reset: function () {}
 };
@@ -352,7 +367,6 @@ window.onload = function () {
 	test.startGame();
 	$('button.category').on('click',function(e){
 		test.categoryClick(e);
-		test.question();
 	});
 
 }
