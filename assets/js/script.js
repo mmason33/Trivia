@@ -279,7 +279,6 @@ var test = {
 
 	},
 	categoryClick: function (event) {
-		// $('.trivia-wrap').empty();
 		for (let cat in this.categories) {
 			if ($(event.target).attr('id') === test.categories[cat].name) {
 				$('.header').append('<h1 class="cat-title animated fadeIn">' + test.categories[cat].name + '</h1>');
@@ -293,12 +292,23 @@ var test = {
 		$('.trivia-wrap').empty();
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
-				$('.trivia-wrap').append('<h3 class="animated fadeIn">'+ questionNumber + '. ' + this.categories[cat].questions[questionCounter].theQuestion + '</h3>')
+				$('.trivia-wrap').append('<h3 class="animated fadeIn">'+ questionNumber + '. ' + this.categories[cat].questions[questionCounter].theQuestion + '</h3>');
 			}
 		}
+		this.questionValue();
 		this.avalChoices();
 		this.timer();
 	},
+	questionValue: function () {
+
+		for (let cat in this.categories) {
+			if (pickedCat === test.categories[cat].name) {
+				$('.trivia-wrap').append('<h4 class="animated fadeIn">' + 'Question value: ' + '$' + this.categories[cat].questions[questionCounter].amount + '</h4>');
+			}
+		}
+
+	},
+
 	avalChoices: function () {
 		for (let cat in this.categories) {
 			if (pickedCat === test.categories[cat].name) {
