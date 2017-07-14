@@ -211,7 +211,7 @@ var test = {
 	],
 
 	startGame: function () {
-
+		$('.trivia-body').append('<button class="directions animated tada infinite">Direction</button>');
 		$('.trivia-body').append('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
 
 	},
@@ -308,6 +308,10 @@ var test = {
 		}	
 	},
 
+	answerResults: function () {
+
+	},
+
 	reset: function () {
 		location.reload();
 	}
@@ -317,8 +321,14 @@ var test = {
 window.onload = function () {
 
 	test.startGame();
-	$('button.category').on('click',function(e){
-		test.categoryClick(e);
+	$('.directions').click(function(){
+		$('body').append(
+			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h2>Directions</h2><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div></div></div>'
+		);
+		$('button.category').on('click',function(e){
+			test.categoryClick(e);
+		});
+
 	});
 
 }

@@ -36,7 +36,7 @@ body {
     top: -10%;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, p {
 	color: #fff;
 	/*color: #666;*/
 }
@@ -59,4 +59,24 @@ h1, h2, h3, h4, h5 {
 	padding: .5em;
 	position: relative;
 	width: 100%;
+}
+
+.directions {
+	transition-delay: 1s !important;
+	transition-duration: 2s;
+}
+
+.directions-container {
+	position: absolute;
+	background: rgba(0,0,0,.9);
+	height: 100vh;
+	width: 100vw;
+	overflow:hidden;
+	top: 0;
+	left: 0;
+}
+
+.directions-text {
+	position: relative;
+	top: 50vh;
 }
