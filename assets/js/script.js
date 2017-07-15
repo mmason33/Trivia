@@ -9,46 +9,10 @@ var numberOfAnswers = 0;
 var index;
 var choiceAsNumber;
 
-
-// var dataURL = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple';
-
-// var promise = new Promise((done, fail) => {
-// 	var trivia = [];
-// 	$.getJSON(dataURL, function(data) {
-// 		$.each(data, function(key, val) {
-// 			trivia.push({key, val});
-// 		});
-// 		done(trivia);
-// 	});
-// });
-
-// promise.then(arr => {
-// 	let trivia = arr[1].val;
-// 	for(let object in trivia) {
-// 		console.log(trivia[object].question);
-// 	}
-// 	let question = trivia[0].question;
-// 	let answers = trivia[0].incorrect_answers;
-// 	let correct_answer = trivia[0].correct_answer;
-// 	ask(question, answers, correct_answer);
-// });
-
-// function ask(question, incorrect_answers, correct_answer) {
-// 	$('#Question').append(question);
-// 	let answers = [correct_answer];
-// 	for(let answer in incorrect_answers) {
-// 		answers.push(incorrect_answers[answer]);
-// 	}
-// 	answers.sort();
-// 	for(let answer in answers) {
-// 		$('#Answers form').append(`<input type="radio" value=" ${answers[answer]} "> ${answers[answer]} <br>`);
-// 	}
-// }
-
-
-var test = {
+var trivia = {
 	score: 0,
 	time: 60,
+	directions: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
 	categories: [
 		{
 			name: 'Math',
@@ -248,15 +212,10 @@ var test = {
 
 	],
 
-	// startGame: function () {
-	// 	// $('.trivia-body').append('<button class="directions animated tada infinite">Directions</button>');
-	// 	// $('.trivia-body').append('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
-
-	// },
 	categoryClick: function (event) {
 		for (let cat in this.categories) {
-			if ($(event.target).attr('id') === test.categories[cat].name) {
-				$('.header').append('<h1 class="cat-title animated fadeIn">' + test.categories[cat].name + '</h1>');
+			if ($(event.target).attr('id') === trivia.categories[cat].name) {
+				$('.header').append('<h1 class="cat-title animated fadeIn">' + trivia.categories[cat].name + '</h1>');
 				pickedCat = $(event.target).attr('id');
 				index = cat;
 			}
@@ -285,7 +244,7 @@ var test = {
 			'<button id="3"class="choice">' + 'D. ' + this.categories[index].questions[questionCounter].choices[3] + '</button>' +
 			'</div></div>'
 		);	
-		$('.choice').click(test.answerClick);
+		$('.choice').click(trivia.answerClick);
 	},
 
 	timer: function () {
@@ -298,8 +257,8 @@ var test = {
 
 			if (currentTime === 0 && questionCounter !== 9) {
 				questionCounter++;
-				test.evalAnswer();
-				test.question();
+				trivia.evalAnswer();
+				trivia.question();
 			}
 
 		}, 1000);
@@ -309,17 +268,17 @@ var test = {
 	answerClick: function () {
 		selectedChoice = $(this).attr('id');
 		choiceAsNumber = parseInt(selectedChoice, 10);
-		console.log(choiceAsNumber, test.categories[index].questions[questionCounter].answer)
+		console.log(choiceAsNumber, trivia.categories[index].questions[questionCounter].answer)
 		clearInterval(timer);
 		if (numberOfAnswers < 9) {
-			test.evalAnswer();
+			trivia.evalAnswer();
 		 	questionCounter++;
 		 	numberOfAnswers++;
-		 	test.question();
+		 	trivia.question();
 		} else if (questionCounter === 9) {
-			test.evalAnswer();
+			trivia.evalAnswer();
 			numberOfAnswers++;
-			test.evalScore();
+			trivia.evalScore();
 		}
 	},
 
@@ -338,17 +297,8 @@ var test = {
 		if (numberOfAnswers === 10) {
 			$('.trivia-wrap').empty();
 			$('.time-wrap').remove();
-			test.answerResults();
-			// $('body').append('<div class="overlay"></div>');
-		}
-		// if (correctAnswers === 10) {
-		// 	$('body').append('<div class="overlay"></div>');
-		// 	console.log('million');
-		// } else if (correctAnswers > 10 && correctAnswers !== 0) {
-		// 	console.log(correctAnswers + '00k');
-		// } else {
-		//  	console.log ('no dice');
-		// }	
+			trivia.answerResults();
+		}	
 	},
 
 	answerResults: function () {
@@ -380,7 +330,7 @@ window.onload = function () {
 
 	$('.directions').click(function(){
 		$('body').append(
-			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h1>Directions</h1><h4 class="directions-instructions">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h4></div></div></div></div>'
+			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h1>Directions</h1><h4 class="directions-instructions">' + trivia.directions + '</h4></div></div></div></div>'
 		);
 
 
@@ -392,7 +342,7 @@ window.onload = function () {
 				$('.directions').removeClass('infinite tada').addClass('zoomOut');
 				$('.trivia-body').append('<div class="trivia-wrap animated zoomIn"><h2>Please select a category</h2><button id="Math" class="category">Math</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
 				$('button.category').on('click',function(e){
-					test.categoryClick(e);
+					trivia.categoryClick(e);
 				});
 			}, 500);
 
