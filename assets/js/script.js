@@ -12,7 +12,7 @@ var choiceAsNumber;
 var trivia = {
 	score: 0,
 	time: 60,
-	directions: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+	directions: 'Select a category. Each question is worth $100,000. There are 10 questions and you have 60 seconds to answer each question. Good luck and hopefully you become a Millionaire!!',
 	categories: [
 		{
 			name: 'Math',
@@ -330,7 +330,7 @@ window.onload = function () {
 
 	$('.directions').click(function(){
 		$('body').append(
-			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h1>Directions</h1><h4 class="directions-instructions">' + trivia.directions + '</h4></div></div></div></div>'
+			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close animated pulse infinite">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h1>Directions</h1><h4 class="directions-instructions">' + trivia.directions + '</h4></div></div></div></div>'
 		);
 
 

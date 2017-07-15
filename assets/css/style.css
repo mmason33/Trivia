@@ -105,7 +105,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 .close {
-	color: #fff;
+	color: #4c4cff;
+	/*text-shadow: 2px 2px 5px #fff;*/
 }
 
 .close:hover {
