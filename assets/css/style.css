@@ -1,8 +1,30 @@
+/*#4C4CFF*/
 body {
 	background: url('../images/background2.png') no-repeat center center;
 	background-size: cover;
+	font-family: 'Bree Serif', serif;
 	position: relative;
 	height: 100vh;
+}
+
+.category, .directions {
+	color: #fff;
+	font-size: 1.2rem;
+	font-family: 'Bree Serif', serif;
+    padding: 7px 15px;
+    position: relative;
+    width: 125px;
+    margin: 1rem;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    background: rgba(0,0,0,.6);
+    transition: ease all 0.3s;
+}
+
+.category:hover, .directions:hover {
+	border-color: #4C4CFF;
+	color: #4C4CFF;
+	background: rgba(255,255,255,.7);
 }
 
 .overlay {
@@ -17,7 +39,7 @@ body {
 }
 
 .trivia-container {
-	background: rgba(0,0,0,.75);
+	/*background: rgba(0,0,0,.75);*/
 	padding: 2em 0;
 }
 
@@ -26,7 +48,13 @@ body {
 	padding-top: 1em;
 }
 
-.timer {
+.money {
+	border: 2px solid #fff;
+	padding: 2rem;
+	background: rgba(0,0,0,.75);
+}
+
+/*.timer {
 	background: #e3e3e3;
 	color: #666;
 	padding:1em;
@@ -34,11 +62,12 @@ body {
     left: 83.75%;
     width: 170px;
     top: -10%;
-}
+}*/
 
 h1, h2, h3, h4, h5, p {
 	color: #fff;
-	/*color: #666;*/
+	font-family: 'Bree Serif', serif;
+	text-shadow: 0px 3px 5px #000;
 }
 
 
@@ -78,5 +107,19 @@ h1, h2, h3, h4, h5, p {
 
 .directions-text {
 	position: relative;
-	top: 50vh;
+	top: 30vh;
+}
+
+.directions-instructions {
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+.close {
+	color: #fff;
+}
+
+.close:hover {
+	transform: rotate(45deg);
+	transition: ease all 0.2s;
 }

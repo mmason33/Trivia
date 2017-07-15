@@ -247,11 +247,11 @@ var test = {
 
 	],
 
-	startGame: function () {
-		$('.trivia-body').append('<button class="directions animated tada infinite">Direction</button>');
-		$('.trivia-body').append('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
+	// startGame: function () {
+	// 	// $('.trivia-body').append('<button class="directions animated tada infinite">Directions</button>');
+	// 	// $('.trivia-body').append('<div class="trivia-wrap"><h3>Please select a category</h3><button id="Math" class="category">Math</button><button id="Science" class=" category">Science</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
 
-	},
+	// },
 	categoryClick: function (event) {
 		for (let cat in this.categories) {
 			if ($(event.target).attr('id') === test.categories[cat].name) {
@@ -269,9 +269,10 @@ var test = {
 		this.questionValue();
 		this.avalChoices();
 		this.timer();
+		console.log(this.categories[index].questions[questionCounter].choices[this.categories[index].questions[questionCounter].answer]);
 	},
 	questionValue: function () {
-		$('.trivia-wrap').append('<h4 class="animated fadeIn">' + 'Question value: ' + '$' + this.categories[index].questions[questionCounter].amount + '</h4>');
+		$('.trivia-wrap').append('<h4 class="animated fadeIn">' + 'For: ' + '$' + this.categories[index].questions[questionCounter].amount + '</h4>');
 	},
 
 	avalChoices: function () {
@@ -287,11 +288,12 @@ var test = {
 	},
 
 	timer: function () {
-		$('.timer').text('Timer: ' + this.time + ' seconds').removeClass('hide');
+		$('.time-wrap').removeClass('hide');
+		$('.timer').text(this.time);
 		var currentTime = this.time;
 		timer =	setInterval(function () {
 			currentTime--;
-			$('.timer').text('Timer: ' + currentTime + ' seconds');
+			$('.timer').text(currentTime);
 
 			if (currentTime === 0 && questionCounter !== 9) {
 				questionCounter++;
@@ -311,11 +313,13 @@ var test = {
 			test.evalAnswer();
 		 	test.question();
 		 	numberOfAnswers++;
-			console.log(numberOfAnswers);
+			// console.log(numberOfAnswers, 'answers');
+			// console.log(questionCounter,'counter');
 		} else if (questionCounter === 9) {
 			test.evalAnswer();
 		 	numberOfAnswers++;
-			console.log(numberOfAnswers);
+			// console.log(numberOfAnswers,'answers');
+			// console.log(questionCounter,'counter');
 			test.evalScore();
 		}
 	},
@@ -323,6 +327,7 @@ var test = {
 	evalAnswer: function () {
 		if (parseInt(selectedChoice) === this.categories[index].questions[questionCounter].answer) {
 			correctAnswers++;
+			console.log('correct');
 		} else if (parseInt(selectedChoice)) {
 			incorrectAnswers++;
 		} else {
@@ -333,20 +338,32 @@ var test = {
 	evalScore: function () {
 		if (numberOfAnswers === 10) {
 			$('.trivia-wrap').empty();
-			$('body').append('<div class="overlay"></div>');
+			$('.time-wrap').remove();
+			test.answerResults();
+			// $('body').append('<div class="overlay"></div>');
 		}
-		if (correctAnswers === 10) {
-			$('body').append('<div class="overlay"></div>');
-			console.log('million');
-		} else if (correctAnswers > 10 && correctAnswers !== 0) {
-			console.log(correctAnswers + '00k');
-		} else {
-		 	console.log ('no dice');
-		}	
+		// if (correctAnswers === 10) {
+		// 	$('body').append('<div class="overlay"></div>');
+		// 	console.log('million');
+		// } else if (correctAnswers > 10 && correctAnswers !== 0) {
+		// 	console.log(correctAnswers + '00k');
+		// } else {
+		//  	console.log ('no dice');
+		// }	
 	},
 
 	answerResults: function () {
-
+		$('.trivia-wrap').append('<h1 class="animated infinite flash">Calculating...</h1>');
+		if (correctAnswers === 10) {
+			$('body').append('<div class="overlay"></div>');
+			console.log('million');
+		}
+		setTimeout( function () {
+			$('.trivia-wrap').empty();
+			$('.trivia-wrap').append(
+			'<h4>Correct Answers: ' + correctAnswers + '</h4><h4>Incorrect Answers: ' + incorrectAnswers + '</h4><h4>Unanswered Questions: ' + unansweredQuestions + '</h4><h2 class="money">You won $' + correctAnswers + '00,000!!' + '</h2>'
+			).removeClass('zoomIn').addClass('zoomIn');;
+		}, 2500);
 	},
 
 	reset: function () {
@@ -357,14 +374,31 @@ var test = {
 
 window.onload = function () {
 
-	test.startGame();
+	setTimeout( function () {
+		$('.directions').addClass('wobble');
+	}, 3500);
+
+
 	$('.directions').click(function(){
 		$('body').append(
-			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h2>Directions</h2><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div></div></div>'
+			'<div class="directions-container animated zoomIn"><div class="container"><span><a href="#" class="close">&#10005;</a></span><div class="row align-items-center"><div class="col-12 text-center directions-text"><h1>Directions</h1><h4 class="directions-instructions">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h4></div></div></div></div>'
 		);
-		$('button.category').on('click',function(e){
-			test.categoryClick(e);
+
+
+		$('.close').click(function() {
+			$('.directions').remove();
+			$('.directions-container').removeClass('zoomIn').addClass('zoomOut');
+			setTimeout(function() { 
+				$('.directions-container').remove();
+				$('.directions').removeClass('infinite tada').addClass('zoomOut');
+				$('.trivia-body').append('<div class="trivia-wrap animated zoomIn"><h2>Please select a category</h2><button id="Math" class="category">Math</button><button id="Sports" class="category">Sports</button><button id="Computers" class="category">Computers</button></div>');
+				$('button.category').on('click',function(e){
+					test.categoryClick(e);
+				});
+			}, 500);
+
 		});
+
 
 	});
 
