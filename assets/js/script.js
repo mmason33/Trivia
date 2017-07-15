@@ -7,6 +7,7 @@ var timer;
 var selectedChoice;
 var numberOfAnswers = 0;
 var index;
+var choiceAsNumber;
 
 
 // var dataURL = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple';
@@ -307,28 +308,26 @@ var test = {
 
 	answerClick: function () {
 		selectedChoice = $(this).attr('id');
+		choiceAsNumber = parseInt(selectedChoice, 10);
+		console.log(choiceAsNumber, test.categories[index].questions[questionCounter].answer)
 		clearInterval(timer);
 		if (numberOfAnswers < 9) {
-			questionCounter++;
 			test.evalAnswer();
-		 	test.question();
+		 	questionCounter++;
 		 	numberOfAnswers++;
-			// console.log(numberOfAnswers, 'answers');
-			// console.log(questionCounter,'counter');
+		 	test.question();
 		} else if (questionCounter === 9) {
 			test.evalAnswer();
-		 	numberOfAnswers++;
-			// console.log(numberOfAnswers,'answers');
-			// console.log(questionCounter,'counter');
+			numberOfAnswers++;
 			test.evalScore();
 		}
 	},
 
 	evalAnswer: function () {
-		if (parseInt(selectedChoice) === this.categories[index].questions[questionCounter].answer) {
+		if (choiceAsNumber === this.categories[index].questions[questionCounter].answer) {
 			correctAnswers++;
 			console.log('correct');
-		} else if (parseInt(selectedChoice)) {
+		} else if (selectedChoice) {
 			incorrectAnswers++;
 		} else {
 			unansweredQuestions++;
