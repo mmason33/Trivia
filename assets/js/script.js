@@ -1,3 +1,14 @@
+// var queryURL = 'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple';
+
+
+// $.ajax({
+// 	url: queryURL,
+// 	method: "GET"
+// }).done(function(result) {
+// 	for (res in result) {
+// 		triva.api.push(result[res]);
+// 	}
+// });
 
 var trivia = {
 	score: 0,
@@ -12,183 +23,89 @@ var trivia = {
 		numberOfAnswers: 0,
 		directions: 'Select a category. Each question is worth $100,000. There are 10 questions and you have 60 seconds to answer each question. Good luck and hopefully you become a Millionaire!!',
 	},
-	categories: [
-		{
-			name: 'Math',
-			questions: [
-				{
-					amount: '100,000',
-					theQuestion: 'What is the sum of 10 + 7?',
-					choices: ['8', '19', '17', '20'],
-					answer: 2
-				},
-				{
-					amount: '200,000',
-					theQuestion: 'What is the quotent of 64 / 8?',
-					choices: ['8', '16', '20', '4'],
-					answer: 0
-				},
-				{
-					amount: '300,000',
-					theQuestion: 'What is 20 x 7?',
-					choices: ['120', '100', '200', '140'],
-					answer: 3
-				},
-				{
-					amount: '400,000',
-					theQuestion: 'What is the answer - (7 + 4 - 1) x 13?',
-					choices: ['144', '133', '130', '140'],
-					answer: 2
-				},
-				{
-					amount: '500,000',
-					theQuestion: 'What is the square root of 144?',
-					choices: ['10', '12', '14', '24'],
-					answer: 1
-				},
-				{
-					amount: '600,000',
-					theQuestion: 'What is the square root of (441) x 2?',
-					choices: ['21', '40', '20', '42'],
-					answer: 3
-				},
-				{
-					amount: '700,000',
-					theQuestion: 'What is the answer - ((239 x 2) + 2) / 4?',
-					choices: ['120', '100', '400', '480'],
-					answer: 0
-				},
-				{
-					amount: '800,000',
-					theQuestion: 'Select the prime number.',
-					choices: ['26', '32', '48', '2'],
-					answer: 3
-				},
-				{
-					amount: '900,000',
-					theQuestion: 'What is the answer - ((-2 x -2) + -1) x -3',
-					choices: ['9', '-12', '-9', '12'],
-					answer: 2
-				},				
-				{
-					amount: '1,000,000',
-					theQuestion: 'What is the cube root of 729?',
-					choices: ['9', '18', '6', '12'],
-					answer: 0
-				}								
-			]
-		},
-		{
-			name: 'Football',
-			questions: [
-				{
-					amount: '100,000',
-					theQuestion: 'What is the American name for Futbol?',
-					choices: ['Football', 'Soccer', 'Baseball', 'Basketball'],
-					answer: 1
-				},
-				{
-					amount: '200,000',
-					theQuestion: 'How many NBA teams are in California?',
-					choices: ['2', '3', '4', '5'],
-					answer: 2
-				},
-				{
-					amount: '300,000',
-					theQuestion: 'What team does Lebron James play for?',
-					choices: ['Kings', 'Lakers', 'Mavericks', 'Cavaliers'],
-					answer: 3
-				},
-				{
-					amount: '400,000',
-					theQuestion: 'How many NFL teams are in Texas?',
-					choices: ['2', '3', '4', '5'],
-					answer: 0
-				},
-				{
-					amount: '500,000',
-					theQuestion: 'Where did Peyton Manning go to college?',
-					choices: ['Stanford', 'USC', 'SMU', 'Tennessee'],
-					answer: 3
-				},
-				{
-					amount: '600,000',
-					theQuestion: 'How many NFL teams have never won a superbowl?',
-					choices: ['12', '13', '14', '15'],
-					answer: 1
-				},
-				{
-					amount: '700,000',
-					theQuestion: 'Where did Marshawn Lynch go to college?',
-					choices: ['Texas', 'Alabama', 'Auburn', 'Berkley'],
-					answer: 3
-				},
-				{
-					amount: '800,000',
-					theQuestion: 'What quarterback has the most superbowls?',
-					choices: ['Troy Aikman', 'Jim Kelly', 'Tom Brady', 'Aaron Rogers'],
-					answer: 2
-				},
-				{
-					amount: '900,000',
-					theQuestion: 'How long is a football field?',
-					choices: ['100 yards', '110 yards', '120 yards', '130 yards'],
-					answer: 2
-				},				
-				{
-					amount: '1,000,000',
-					theQuestion: 'What year was the first NFL game?',
-					choices: ['1917', '1936', '1942', '1920'],
-					answer: 3
-				}								
-			]
-		}
+	queryURL: 'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple',
+	api: {},
 
-	],
+	apiHandle: function (result, category) {
+
+		$.ajax({
+			url: `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`,
+			method: "GET"
+		}).done(function(result) {
+
+			trivia.api = result;
+
+		});	
+
+	},
 
 	categoryClick: function (event) {
+		console.log($(event.currentTarget).attr('id'));
+		trivia.apiHandle({}, $(event.currentTarget).attr('id'));
 
-		for (let cat in this.categories) {
+		$('.trivia-wrap').empty().append('<h1 class="flash animated infinite">Loading</h1>');
 
-			if ($(event.currentTarget).attr('id') === trivia.categories[cat].name) {
+		setTimeout( function () {
+			trivia.question();
+		}, 3000);
 
-				$('.header').append(
-					'<h1 class="cat-title animated fadeIn">' + trivia.categories[cat].name + '</h1>'
-				);
-
-				this.utils.selectedIndex = cat;
-
-			}
-
-		}
-		this.question();
 	},
 
 	question: function () {
+
 		$('.trivia-wrap').empty();
-		param =	$('.trivia-wrap').append(
-			'<h3 class="animated fadeIn">'+ this.utils.questionNumber + '. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].theQuestion + '</h3>' +
-			'<h4 class="animated fadeIn">' + 'For: ' + '$' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].amount + '</h4>'
+		$('.trivia-wrap').append(
+
+			'<h3 class="animated fadeIn">'+ this.utils.questionNumber + '. ' + this.api.results[this.utils.questionCounter].question + '</h3>'
+
 		);
+
 		this.avalChoices();
 		this.timer();
 		this.utils.questionNumber++;
 
-		console.log(
-			'Correct Answer', this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer]
-		);
+		console.log('Correct Answer', this.api.results[this.utils.questionCounter].correct_answer);
 
 	},
 
 	avalChoices: function () {
 
+		var correct_answer = this.api.results[this.utils.questionCounter].correct_answer;
+
+		this.api.results[this.utils.questionCounter].incorrect_answers.push(correct_answer);
+
+		this.api.results[this.utils.questionCounter].incorrect_answers.sort();
+
+		var answer = this.api.results[this.utils.questionCounter].incorrect_answers;	
+
 		$('.trivia-wrap').append(
 			'<div class="row justify-content-center animated fadeIn">' +
 				'<div class="col-md-5 col-sm-12 text-center">' +
-					'<button id="0"class="choice">' + 'A. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[0] + '</button>' +
-					'<button id="1"class="choice">' + 'B. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[1] + '</button>' +
-					'<button id="2"class="choice">' + 'C. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[2] + '</button>' +
-					'<button id="3"class="choice">' + 'D. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[3] + '</button>' +
+
+					`<button id="0"class="choice" value="${answer[0]}">` + 'A. ' + 
+
+					answer[0] + 
+
+					'</button>' +
+
+					`<button id="1"class="choice" value="${answer[1]}">` + 'B. ' + 
+
+					answer[1] + 
+
+					'</button>' +
+
+					`<button id="2"class="choice" value="${answer[2]}">` + 'C. ' + 
+
+					answer[2] + 
+			
+					'</button>' +
+
+					`<button id="3"class="choice" value="${answer[3]}">` + 'D. ' + 
+
+					answer[3] + 
+
+					'</button>' +
+
 				'</div>' +
 			'</div>'
 		);
@@ -212,13 +129,13 @@ var trivia = {
 				if (trivia.utils.questionCounter < 9) {
 
 					trivia.utils.questionCounter++;
-					trivia.evalAnswerChosen();
+					trivia.evalAnswerChosen(undefined, timer);
 					trivia.question();
 
 				} else {
 
 					currentTime = 0;
-					trivia.evalAnswerChosen(undefined);
+					trivia.evalAnswerChosen(undefined, timer);
 					trivia.evalQuestionCount();
 
 				}
@@ -235,59 +152,47 @@ var trivia = {
 
 	answerClick: function (interval, event) {
 
-		var selectedChoice = $(event).attr('id');
-		var choiceAsNumber = parseInt(selectedChoice, 10);
+		var selectedChoice = $(event).val();
 
 		clearInterval(interval);
 
 		if (trivia.utils.numberOfAnswers < 9) {
 
-			trivia.evalAnswerChosen(choiceAsNumber);
+			trivia.evalAnswerChosen(selectedChoice);
 		 	trivia.utils.questionCounter++;
 		 	trivia.question();
 
 		} else if (trivia.utils.questionCounter === 9) {
 
-			trivia.evalAnswerChosen(choiceAsNumber);
+			trivia.evalAnswerChosen(selectedChoice);
 			trivia.evalQuestionCount();
 
 		}
 	},
 
-	evalAnswerChosen: function (choice) {
+	evalAnswerChosen: function (choice, interval) {
 
-		if (choice === this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer) {
+		if (choice === this.api.results[this.utils.questionCounter].correct_answer) {
 
 			this.utils.correctAnswers++;
 			trivia.utils.numberOfAnswers++;
 
-			console.log(
-				'Correct =>',
-				'Selected Answer Index =>', choice, '--', 
-				'Correct Answer Index =>', trivia.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer
-			);
+			console.log('Correct');
 
-		} else if (choice !== this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer && choice !== undefined) {
+		} else if (choice !== this.api.results[this.utils.questionCounter].correct_answer && choice !== undefined) {
 
 			this.utils.incorrectAnswers++;
 			trivia.utils.numberOfAnswers++;
 
-			console.log(
-				'Incorrect =>',
-				'Selected Answer Index =>', choice, '--', 
-				'Correct Answer Index =>', trivia.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer
-			);
+			console.log('Incorrect');
 
 		} else if (choice === undefined) {
 
+			clearInterval(interval);
 			this.utils.unansweredQuestions++;
 			trivia.utils.numberOfAnswers++;
 
-			console.log(
-				'Unanswered =>',
-				'Selected Answer Index =>', choice, '--', 
-				'Correct Answer Index =>', trivia.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer
-			);
+			console.log('Unanswered');
 
 		}
 
@@ -383,7 +288,7 @@ var trivia = {
 
 
 window.onload = function () {
-
+	
 	setTimeout( function () {
 
 		$('.directions').addClass('wobble');
@@ -419,8 +324,11 @@ window.onload = function () {
 				$('.trivia-body').append(
 					'<div class="trivia-wrap animated zoomIn">' + 
 						'<h2>Please select a category</h2>' +
-						'<button id="Math" class="category">Math</button>' +
-						'<button id="Football" class="category">Football</button>' +
+						'<button id="19" class="category">Math</button>' +
+						'<button id="21" class="category">Sports</button>' +
+						'<button id="9" class="category">General Knowledge</button>' +
+						'<button id="14" class="category">Television</button>' +
+						'<button id="28" class="category">Vehicles</button>' +
 					'</div>'
 				);
 
