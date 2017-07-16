@@ -1,14 +1,3 @@
-// var queryURL = 'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple';
-
-
-// $.ajax({
-// 	url: queryURL,
-// 	method: "GET"
-// }).done(function(result) {
-// 	for (res in result) {
-// 		triva.api.push(result[res]);
-// 	}
-// });
 
 var trivia = {
 	score: 0,
@@ -46,6 +35,7 @@ var trivia = {
 		$('.trivia-wrap').empty().append('<h1 class="flash animated infinite">Loading</h1>');
 
 		setTimeout( function () {
+			// $('.header').append('<h2 class="cat-title animated fadeIn">' + trivia.api.results[0].category + '</h2>');
 			trivia.question();
 		}, 3000);
 
@@ -272,8 +262,11 @@ var trivia = {
 		$('.trivia-body').append(
 			'<div class="trivia-wrap animated zoomIn">' + 
 				'<h2>Please select a category</h2>' +
-				'<button id="Math" class="category">Math</button>' +
-				'<button id="Football" class="category">Football</button>' +
+				'<button id="23" class="category" value="History">History</button>' +
+				'<button id="21" class="category" value="Sports">Sports</button>' +
+				'<button id="9" class="category" value="General">General</button>' +
+				'<button id="14" class="category" value="Television">Television</button>' +
+				'<button id="28" class="category" value="Vehicles">Vehicles</button>' +
 			'</div>'
 		);
 
@@ -324,11 +317,11 @@ window.onload = function () {
 				$('.trivia-body').append(
 					'<div class="trivia-wrap animated zoomIn">' + 
 						'<h2>Please select a category</h2>' +
-						'<button id="19" class="category">Math</button>' +
-						'<button id="21" class="category">Sports</button>' +
-						'<button id="9" class="category">General Knowledge</button>' +
-						'<button id="14" class="category">Television</button>' +
-						'<button id="28" class="category">Vehicles</button>' +
+						'<button id="23" class="category" value="History">History</button>' +
+						'<button id="21" class="category" value="Sports">Sports</button>' +
+						'<button id="9" class="category" value="General">General</button>' +
+						'<button id="14" class="category" value="Television">Television</button>' +
+						'<button id="28" class="category" value="Vehicles">Vehicles</button>' +
 					'</div>'
 				);
 
