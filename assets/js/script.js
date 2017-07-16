@@ -1,7 +1,7 @@
 
 var trivia = {
 	score: 0,
-	time: 1,
+	time: 3,
 	utils: {
 		selectedIndex: 0,
 		questionCounter: 0,
@@ -206,6 +206,7 @@ var trivia = {
 			currentTime--;
 			$('.timer').text(currentTime);
 			console.log(trivia.utils.numberOfAnswers);
+
 			if (currentTime === 0) {
 
 				if (trivia.utils.questionCounter < 9) {
@@ -221,7 +222,6 @@ var trivia = {
 					trivia.evalQuestionCount();
 
 				}
-
 
 			}
 
@@ -325,7 +325,7 @@ var trivia = {
 				'<h4>Correct Answers: ' + trivia.utils.correctAnswers + '</h4>' +
 				'<h4>Incorrect Answers: ' + trivia.utils.incorrectAnswers + '</h4>' +
 				'<h4>Unanswered Questions: ' + trivia.utils.unansweredQuestions + '</h4>' +
-				'<h4>Ummmmmm..... I\'m sorry you missed all of the questions.</h4>'
+				'<h4>Ummmmmm..... I\'m sorry you didn\'t answer questions.</h4>'
 			);
 
 		}
@@ -363,6 +363,7 @@ var trivia = {
 		$('.trivia-wrap').remove();
 		$('.overlay').remove();
 		$('.million').remove();
+		$('.cat-title').text('');
 		$('.trivia-body').append(
 			'<div class="trivia-wrap animated zoomIn">' + 
 				'<h2>Please select a category</h2>' +
