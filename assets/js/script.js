@@ -69,13 +69,13 @@ class trivia {
 
 	avalChoices () {
 
-		var correct_answer = this.props.api.results[this.props.utils.questionCounter].correct_answer;
+		let correct_answer = this.props.api.results[this.props.utils.questionCounter].correct_answer;
 
 		this.props.api.results[this.props.utils.questionCounter].incorrect_answers.push(correct_answer);
 
 		this.props.api.results[this.props.utils.questionCounter].incorrect_answers.sort();
 
-		var answer = this.props.api.results[this.props.utils.questionCounter].incorrect_answers;	
+		let answer = this.props.api.results[this.props.utils.questionCounter].incorrect_answers;	
 
 		$('.trivia-wrap').append(
 			'<div class="row justify-content-center animated fadeIn">' +
