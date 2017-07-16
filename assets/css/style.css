@@ -7,7 +7,7 @@ body {
 	height: 100vh;
 }
 
-.category, .directions {
+.category, .directions, #reset {
 	color: #fff;
 	font-size: 1.2rem;
 	font-family: 'Bree Serif', serif;
@@ -21,6 +21,10 @@ body {
     transition: ease all 0.3s;
 }
 
+#reset {
+	width: auto !important;
+}
+
 .category:hover, .directions:hover {
 	border-color: #4C4CFF;
 	color: #4C4CFF;
@@ -30,12 +34,21 @@ body {
 .overlay {
 	background: url('../images/giphy.gif') no-repeat center center;
 	background-size: cover;
-	opacity: .5;
 	position: absolute;
 	width: 100%;
 	height: 110vh;
 	top: 0;
 	left: 0;
+}
+
+.million {
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+}
+
+.million h1 {
+	text-align: center;
 }
 
 .trivia-container {
