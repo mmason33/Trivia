@@ -261,7 +261,7 @@ var trivia = {
 		$('.cat-title').text('');
 		$('.trivia-body').append(
 			'<div class="trivia-wrap animated zoomIn">' + 
-				'<h2>Please select a category</h2>' +
+				'<h2 class="select">Please select a category</h2>' +
 				'<button id="23" class="category" value="History">History</button>' +
 				'<button id="21" class="category" value="Sports">Sports</button>' +
 				'<button id="9" class="category" value="General">General</button>' +
@@ -316,7 +316,7 @@ window.onload = function () {
 				$('.directions').removeClass('infinite wobble').addClass('zoomOut');
 				$('.trivia-body').append(
 					'<div class="trivia-wrap animated zoomIn">' + 
-						'<h2>Please select a category</h2>' +
+						'<h2 class="select">Please select a category</h2>' +
 						'<button id="23" class="category" value="History">History</button>' +
 						'<button id="21" class="category" value="Sports">Sports</button>' +
 						'<button id="9" class="category" value="General">General</button>' +

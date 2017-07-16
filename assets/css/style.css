@@ -153,6 +153,10 @@ h1, h2, h3, h4, h5, p {
 	position: absolute;
 }
 
+.select {
+	margin-top: .5em;
+}
+
 @media screen and (max-width: 1600px) {
 
 	.img-fluid.center-block {
@@ -168,7 +172,7 @@ h1, h2, h3, h4, h5, p {
 	}
 
 	.img-fluid.center-block {
-		width: 150px;
+		width: 200px;
 	}
 
 	.time-wrap, .triva-wrap h1,h2,h3,h4 {
@@ -177,6 +181,15 @@ h1, h2, h3, h4, h5, p {
 
 	.choice {
 		padding: .25em;
+	}
+
+}
+
+@media screen and (max-width: 425px) {
+
+	.category, .directions, #reset {
+		font-size: .9rem;
+		margin: 1rem .5rem;
 	}
 
 }
