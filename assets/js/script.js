@@ -1,7 +1,7 @@
 
 var trivia = {
 	score: 0,
-	time: 60,
+	time: 1,
 	utils: {
 		selectedIndex: 0,
 		questionCounter: 0,
@@ -205,12 +205,23 @@ var trivia = {
 
 			currentTime--;
 			$('.timer').text(currentTime);
+			console.log(trivia.utils.numberOfAnswers);
+			if (currentTime === 0) {
 
-			if (currentTime === 0 && trivia.utils.questionCounter !== 9) {
+				if (trivia.utils.questionCounter < 9) {
 
-				trivia.utils.questionCounter++;
-				trivia.evalAnswerChosen();
-				trivia.question();
+					trivia.utils.questionCounter++;
+					trivia.evalAnswerChosen();
+					trivia.question();
+
+				} else {
+
+					currentTime = 0;
+					trivia.evalAnswerChosen(undefined);
+					trivia.evalQuestionCount();
+
+				}
+
 
 			}
 
@@ -233,13 +244,11 @@ var trivia = {
 
 			trivia.evalAnswerChosen(choiceAsNumber);
 		 	trivia.utils.questionCounter++;
-		 	trivia.utils.numberOfAnswers++;
 		 	trivia.question();
 
 		} else if (trivia.utils.questionCounter === 9) {
 
 			trivia.evalAnswerChosen(choiceAsNumber);
-			trivia.utils.numberOfAnswers++;
 			trivia.evalQuestionCount();
 
 		}
@@ -250,6 +259,7 @@ var trivia = {
 		if (choice === this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer) {
 
 			this.utils.correctAnswers++;
+			trivia.utils.numberOfAnswers++;
 
 			console.log(
 				'Correct =>',
@@ -260,6 +270,7 @@ var trivia = {
 		} else if (choice !== this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].answer && choice !== undefined) {
 
 			this.utils.incorrectAnswers++;
+			trivia.utils.numberOfAnswers++;
 
 			console.log(
 				'Incorrect =>',
@@ -270,6 +281,7 @@ var trivia = {
 		} else if (choice === undefined) {
 
 			this.utils.unansweredQuestions++;
+			trivia.utils.numberOfAnswers++;
 
 			console.log(
 				'Unanswered =>',
