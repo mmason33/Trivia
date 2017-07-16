@@ -127,10 +127,34 @@ h1, h2, h3, h4, h5, p {
 	transition: ease all 0.2s;
 }
 
+.closer {
+	position: absolute;
+}
+
 @media screen and (max-width: 1600px) {
 
 	.img-fluid.center-block {
 		width: 275px;
+	}
+
+}
+
+@media screen and (max-width: 576px) {
+
+	.directions-text * {
+		font-size: 95%;
+	}
+
+	.img-fluid.center-block {
+		width: 150px;
+	}
+
+	.time-wrap, .cat-title, .triva-wrap h1,h2,h3,h4 {
+		font-size: 99%;
+	}
+
+	.choice {
+		padding: .25em;
 	}
 
 }

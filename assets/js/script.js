@@ -184,7 +184,7 @@ var trivia = {
 
 		$('.trivia-wrap').append(
 			'<div class="row justify-content-center animated fadeIn">' +
-				'<div class="col-5 text-center">' +
+				'<div class="col-md-5 col-sm-12 text-center">' +
 					'<button id="0"class="choice">' + 'A. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[0] + '</button>' +
 					'<button id="1"class="choice">' + 'B. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[1] + '</button>' +
 					'<button id="2"class="choice">' + 'C. ' + this.categories[this.utils.selectedIndex].questions[trivia.utils.questionCounter].choices[2] + '</button>' +
@@ -396,7 +396,7 @@ window.onload = function () {
 		$('body').append(
 			'<div class="directions-container animated zoomIn">' +
 				'<div class="container">' +
-					'<span><a href="#" class="close animated pulse infinite">&#10005;</a></span>' +
+					'<span class="closer"><a href="#" class="close animated pulse infinite">&#10005;</a></span>' +
 					'<div class="row align-items-center">' +
 						'<div class="col-12 text-center directions-text">' +
 							'<h1>Directions</h1>' +
