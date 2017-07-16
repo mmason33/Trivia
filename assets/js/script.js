@@ -1,4 +1,3 @@
-
 var trivia = {
 	score: 0,
 	time: 60,
@@ -35,7 +34,7 @@ var trivia = {
 		$('.trivia-wrap').empty().append('<h1 class="flash animated infinite">Loading</h1>');
 
 		setTimeout( function () {
-			// $('.header').append('<h2 class="cat-title animated fadeIn">' + trivia.api.results[0].category + '</h2>');
+			$('.header').append('<h2 class="cat-title animated fadeIn">' + trivia.api.results[0].category + '</h2>');
 			trivia.question();
 		}, 3000);
 
