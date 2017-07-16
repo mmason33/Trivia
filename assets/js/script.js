@@ -1,7 +1,7 @@
 
 var trivia = {
 	score: 0,
-	time: 3,
+	time: 60,
 	utils: {
 		selectedIndex: 0,
 		questionCounter: 0,
