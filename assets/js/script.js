@@ -16,17 +16,16 @@ class trivia {
 				numberOfAnswers: props.utils.numberOfAnswers,
 				directions: props.utils.directions,
 			},
-			queryURL: props.queryURL,
 			api: props.api
 		}
 
 	}
 
 
-	apiHandle (result, category) {
+	apiHandle (result, category, diff) {
 
 		let api = $.ajax({
-			url: `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`,
+			url: `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${diff}&type=multiple`,
 			method: "GET"
 		}).done((result) => {
 
@@ -36,10 +35,9 @@ class trivia {
 
 	}
 
-	categoryClick (event) {
+	categoryClick (event, diff) {
 
-		console.log($(event.currentTarget).attr('id'));
-		this.apiHandle({}, $(event.currentTarget).attr('id'));
+		this.apiHandle({}, $(event.currentTarget).attr('id'), diff);
 
 		$('.trivia-wrap').empty().append('<h1 class="flash animated infinite">Loading</h1>');
 
@@ -55,7 +53,7 @@ class trivia {
 		$('.trivia-wrap').empty();
 		$('.trivia-wrap').append(
 
-			'<h3 class="animated fadeIn">'+ this.props.utils.questionNumber + '. ' + this.props.api.results[this.props.utils.questionCounter].question + '</h3>'
+			`<h3 class="animated fadeIn">${this.props.utils.questionNumber}. ${this.props.api.results[this.props.utils.questionCounter].question}</h3>`
 
 		);
 
@@ -81,29 +79,10 @@ class trivia {
 			'<div class="row justify-content-center animated fadeIn">' +
 				'<div class="col-md-5 col-sm-12 text-center">' +
 
-					`<button id="0"class="choice" value="${answer[0]}">` + 'A. ' + 
-
-					answer[0] + 
-
-					'</button>' +
-
-					`<button id="1"class="choice" value="${answer[1]}">` + 'B. ' + 
-
-					answer[1] + 
-
-					'</button>' +
-
-					`<button id="2"class="choice" value="${answer[2]}">` + 'C. ' + 
-
-					answer[2] + 
-			
-					'</button>' +
-
-					`<button id="3"class="choice" value="${answer[3]}">` + 'D. ' + 
-
-					answer[3] + 
-
-					'</button>' +
+					`<button id="0"class="choice" value="${answer[0]}">A. ${answer[0]}</button>` +
+					`<button id="0"class="choice" value="${answer[1]}">A. ${answer[1]}</button>` +
+					`<button id="0"class="choice" value="${answer[2]}">A. ${answer[2]}</button>` +
+					`<button id="0"class="choice" value="${answer[3]}">A. ${answer[3]}</button>` +
 
 				'</div>' +
 			'</div>'
@@ -117,7 +96,7 @@ class trivia {
 		$('.timer').text(this.props.time);
 		let currentTime = this.props.time;
 
-		let timer =	setInterval(() => {
+		let timer = setInterval(() => {
 
 			currentTime--;
 			$('.timer').text(currentTime);
@@ -228,9 +207,9 @@ class trivia {
 			$('.cat-title').remove();
 			$('.trivia-wrap').empty().append(
 				'<button id="reset" onClick="game.reset();">Play Again</button>' +
-				'<h4>Correct Answers: ' + this.props.utils.correctAnswers + '</h4>' +
-				'<h4>Incorrect Answers: ' + this.props.utils.incorrectAnswers + '</h4>' +
-				'<h4>Unanswered Questions: ' + this.props.utils.unansweredQuestions + '</h4>' +
+				`<h4>Correct Answers: ${this.props.utils.correctAnswers} </h4>` +
+				`<h4>Incorrect Answers: ${this.props.utils.incorrectAnswers}</h4>` +
+				`<h4>Unanswered Questions: ${this.props.utils.unansweredQuestions}</h4>` +
 				'<h4>Ummmmmm..... I\'m sorry you didn\'t answer questions.</h4>'
 			);
 
@@ -247,10 +226,10 @@ class trivia {
 				$('.cat-title').text(this.props.api.results[0].category);
 				$('.trivia-wrap').empty().append(
 					'<button id="reset" onClick="game.reset();">Play Again</button>' +
-					'<h4>Correct Answers: ' + this.props.utils.correctAnswers + '</h4>' +
-					'<h4>Incorrect Answers: ' + this.props.utils.incorrectAnswers + '</h4>' +
-					'<h4>Unanswered Questions: ' + this.props.utils.unansweredQuestions + '</h4>' +
-					'<h2 class="money">You won $' + this.props.utils.correctAnswers + '00,000!!' + '</h2>'
+					`<h4>Correct Answers: ${this.props.utils.correctAnswers} </h4>` +
+					`<h4>Incorrect Answers: ${this.props.utils.incorrectAnswers}</h4>` +
+					`<h4>Unanswered Questions: ${this.props.utils.unansweredQuestions}</h4>` +
+					`<h2 class="money">You won $ ${this.props.utils.correctAnswers}00,000!!</h2>`
 				).removeClass('zoomIn').addClass('zoomIn');
 
 			}, 2500);
@@ -273,21 +252,35 @@ class trivia {
 		$('.million').remove();
 		$('.cat-title').remove();
 		$('.trivia-body').append(
+
 			'<div class="trivia-wrap animated zoomIn">' + 
+				'<h4>Select your difficulty</h4>' +
+				'<button id="easy" class="directions diff" value="Easy">Easy</button>' +
+				'<button id="medium" class="directions diff" value="Hard">Hard</button>' +
+			'</div>'
+
+		);
+
+		$('.diff').click( function () {
+
+			let diff = $(this).attr('id');
+			$('.trivia-wrap').empty().append(
+
 				'<h2 class="select">Please select a category</h2>' +
 				'<button id="23" class="category" value="History">History</button>' +
 				'<button id="21" class="category" value="Sports">Sports</button>' +
 				'<button id="9" class="category" value="General">General</button>' +
 				'<button id="14" class="category" value="Television">Television</button>' +
-				'<button id="28" class="category" value="Vehicles">Vehicles</button>' +
-			'</div>'
-		);
+				'<button id="28" class="category" value="Vehicles">Vehicles</button>'
 
-		$('button.category').click((e) => {
+			);
+				$('button.category').click((e) => {
 
-			this.categoryClick(e);
+					let foo = diff;
+					game.categoryClick(e, foo);
 
-		});
+				});
+		});		
 
 	}
 
@@ -307,7 +300,6 @@ const game = new trivia({
 		numberOfAnswers: 0,
 		directions: 'Select a category. Each question is worth $100,000. There are 10 questions and you have 60 seconds to answer each question. Good luck and hopefully you become a Millionaire!!',
 	},
-	queryURL: 'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple',
 	api: {}
 });
 
@@ -325,48 +317,46 @@ window.onload = function () {
 		$('body').append(
 			'<div class="directions-container animated zoomIn">' +
 				'<div class="container">' +
-					'<span class="closer"><a href="#" class="close animated pulse infinite">&#10005;</a></span>' +
 					'<div class="row align-items-center">' +
 						'<div class="col-12 text-center directions-text">' +
 							'<h1>Directions</h1>' +
-							`<h4 class="directions-instructions">${game.props.utils.directions} </h4>` +
+							`<h4 class="directions-instructions">${game.props.utils.directions} </h4><br>` +
+							'<h4>Select your difficulty</h4>' +
+							'<button id="easy" class="directions diff" value="Easy">Easy</button>' +
+							'<button id="medium" class="directions diff" value="Hard">Hard</button>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
 			'</div>'
 		);
 
+		$('.diff').click( function () {
 
-		$('.close').click( function () {
-
+			let diff = $(this).attr('id');
 			$('.directions').remove();
 			$('.directions-container').removeClass('zoomIn').addClass('zoomOut');
 
-			setTimeout( function () { 
+			$('.directions-container').remove();
+			$('.directions').removeClass('infinite wobble').addClass('zoomOut');
+			$('.trivia-body').append(
+				'<div class="trivia-wrap animated zoomIn">' + 
+					'<h2 class="select">Please select a category</h2>' +
+					'<button id="23" class="category" value="History">History</button>' +
+					'<button id="21" class="category" value="Sports">Sports</button>' +
+					'<button id="9" class="category" value="General">General</button>' +
+					'<button id="14" class="category" value="Television">Television</button>' +
+					'<button id="28" class="category" value="Vehicles">Vehicles</button>' +
+				'</div>'
+			);
 
-				$('.directions-container').remove();
-				$('.directions').removeClass('infinite wobble').addClass('zoomOut');
-				$('.trivia-body').append(
-					'<div class="trivia-wrap animated zoomIn">' + 
-						'<h2 class="select">Please select a category</h2>' +
-						'<button id="23" class="category" value="History">History</button>' +
-						'<button id="21" class="category" value="Sports">Sports</button>' +
-						'<button id="9" class="category" value="General">General</button>' +
-						'<button id="14" class="category" value="Television">Television</button>' +
-						'<button id="28" class="category" value="Vehicles">Vehicles</button>' +
-					'</div>'
-				);
+			$('button.category').click( function (e) {
 
-				$('button.category').click( function (e) {
+				let foo = diff;
+				game.categoryClick(e, foo);
 
-					game.categoryClick(e);
+			});
 
-				});
-
-			}, 500);
-
-		});
-
+		});	
 
 	});
 
