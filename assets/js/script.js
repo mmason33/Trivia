@@ -80,9 +80,9 @@ class trivia {
 				'<div class="col-md-5 col-sm-12 text-center">' +
 
 					`<button id="0"class="choice" value="${answer[0]}">A. ${answer[0]}</button>` +
-					`<button id="0"class="choice" value="${answer[1]}">A. ${answer[1]}</button>` +
-					`<button id="0"class="choice" value="${answer[2]}">A. ${answer[2]}</button>` +
-					`<button id="0"class="choice" value="${answer[3]}">A. ${answer[3]}</button>` +
+					`<button id="0"class="choice" value="${answer[1]}">B. ${answer[1]}</button>` +
+					`<button id="0"class="choice" value="${answer[2]}">C. ${answer[2]}</button>` +
+					`<button id="0"class="choice" value="${answer[3]}">D. ${answer[3]}</button>` +
 
 				'</div>' +
 			'</div>'
