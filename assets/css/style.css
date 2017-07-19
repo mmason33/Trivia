@@ -4,7 +4,7 @@ body {
 	background-size: cover;
 	font-family: 'Bree Serif', serif;
 	position: relative;
-	height: 100vh;
+/* 	height: 100vh; */
 }
 
 body:after {
